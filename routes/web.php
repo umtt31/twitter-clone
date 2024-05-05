@@ -29,6 +29,8 @@ Route::group(['prefix' => 'login/'], function () {
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/profile', [UserController::class, 'profile'])->name('profile')->middleware('auth');
+
 Route::resource('users', UserController::class)->only('show', 'update', 'edit', 'update')->middleware(['auth']);
 
 Route::get('/terms', function () {
