@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
     //
-    public function store() {
+    public function store()
+    {
 
         $validated = request()->validate([
             'content' => 'required|min:3|max:240'
@@ -18,42 +20,40 @@ class IdeaController extends Controller
 
         Idea::create($validated);
 
-        return redirect()->route('dashboard')->with('success','Idea created successfully!');
+        return redirect()->route('dashboard')->with('success', 'Idea created successfully!');
     }
 
-    public function destroy(Idea $idea) {
-
-        if(auth()->user()->id !== $idea->user_id) {
-            abort(404);
-        }
+    public function destroy(Idea $idea)
+    {
+        Gate::authorize('delete', $idea);
 
         $idea->delete();
-
-        return redirect()->route('dashboard')->with('success','Idea deleted successfully!');
+        return redirect()->route('dashboard')->with('success', 'Idea deleted successfully!');
     }
 
-    public function show(Idea $idea) {
+    public function show(Idea $idea)
+    {
         return view('ideas.show', compact('idea'));
     }
 
-    public function edit(Idea $idea) {
-        if(auth()->user()->id !== $idea->user_id) {
-            abort(404);
-        }
+    public function edit(Idea $idea)
+    {
+        Gate::authorize('update', $idea);
+
         $editing = true;
         return view('ideas.show', compact('idea', "editing"));
     }
 
-    public function update(Idea $idea) {
-        if(auth()->user()->id !== $idea->user_id) {
-            abort(404);
-        }
+    public function update(Idea $idea)
+    {
+        Gate::authorize('update', $idea);
+
         $validated = request()->validate([
             'content' => 'required|min:3|max:240'
         ]);
 
         $idea->update($validated);
 
-        return redirect()->route('ideas.show', $idea->id)->with('success','Idea updated successfully!');
+        return redirect()->route('ideas.show', $idea->id)->with('success', 'Idea updated successfully!');
     }
 }

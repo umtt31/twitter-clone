@@ -20,6 +20,12 @@
                     </li>
                 @endguest
                 @auth()
+                    @if (Auth::user()->isAdmin)
+                        <li class="nav-item">
+                            <a class="@if (Route::is('admin.dashboard')) active @endif nav-link"
+                                href="{{ route('admin.dashboard') }}"> ADMIN </a>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <a class="@if (Route::is('profile')) active @endif nav-link"
                             href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
