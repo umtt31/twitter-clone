@@ -10,7 +10,15 @@ use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\IdeaLikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\SetLocaleMiddleware;
 use Illuminate\Support\Facades\Route;
+
+Route::get('lang/{lang}', function ($lang) {
+    app()->setLocale($lang);
+    session()->put('locale', $lang);
+
+    return redirect()->route('dashboard');
+})->name('lang');
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

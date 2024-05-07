@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\SetLocaleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         //$middleware->append(EnsureUserIsAdmin::class);
+        $middleware->append(SetLocaleMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

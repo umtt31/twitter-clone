@@ -16,5 +16,5 @@
     </div>
 @endauth
 @guest
-    <h4>Login To Share Your Ideas</h4>
+    <h4> {{ __('ideas.login-to-share') }} </h4>
 @endguest
