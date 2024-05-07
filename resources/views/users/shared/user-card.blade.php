@@ -11,9 +11,9 @@
                 </div>
             </div>
             @auth()
-                @if (Auth::id() === $user->id)
+                @can('update', $user)
                     <a href="{{ route('users.edit', $user->id) }}">edit</a>
-                @endif
+                @endcan
             @endauth
         </div>
     </div>
