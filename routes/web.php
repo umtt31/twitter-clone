@@ -13,7 +13,7 @@ use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\SetLocaleMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('lang/{lang}', function ($lang) {
+Route::get('lang/{lang}', function ($lang = 'en') {
     app()->setLocale($lang);
     session()->put('locale', $lang);
 
