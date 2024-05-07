@@ -7,6 +7,11 @@
                     <span>Home</span></a>
             </li>
             <li class="nav-item">
+                <a class="@if (Route::is('feed')) text-white bg-black rounded @endif nav-link"
+                    href="{{ route('feed') }}">
+                    <span>Feed</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="@if (Route::is('terms')) text-white bg-black rounded @endif nav-link"
                     href="{{ route('terms') }}">
                     <span>Terms</span></a>
