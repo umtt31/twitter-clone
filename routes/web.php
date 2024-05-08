@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\IdeaController as AdminIdeaController;
+use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeaController;
@@ -11,6 +14,7 @@ use App\Http\Controllers\IdeaLikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\SetLocaleMiddleware;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 Route::get('lang/{lang}', function ($lang = 'en') {
@@ -60,5 +64,10 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
-
-Route::get('/admin', [AdminDashboardController::class, 'index'])->middleware(['auth'])->name('admin.dashboard');
+Route::middleware(['auth'])->prefix('admin/')->as('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users');
+    Route::get('/ideas', [AdminIdeaController::class, 'index'])->name('ideas');
+    Route::get('/comments', [AdminCommentController::class, 'index'])->name('comments');
+    Route::delete('/comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+});

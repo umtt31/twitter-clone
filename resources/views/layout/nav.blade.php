@@ -20,7 +20,7 @@
                     </li>
                 @endguest
                 @auth()
-                    @if (Auth::user()->isAdmin)
+                    @if (auth()->user()->is_admin)
                         <li class="nav-item">
                             <a class="@if (Route::is('admin.dashboard')) active @endif nav-link"
                                 href="{{ route('admin.dashboard') }}"> ADMIN </a>
